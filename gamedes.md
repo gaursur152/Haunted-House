@@ -71,24 +71,35 @@ A text-based haunted house game written in Python. The player navigates through 
 - [done] Fix exits display — show direction names only, not memory addresses
 - [done] Check inventory command — let player see what's in their inventory
 - [done] Display monster's current health each turn
-- [ ] `use_weapon` — line 49 crashes if no monster in room, use `monster` parameter instead of `self.current_room.monster`
-- [ ] Garlic against non-Nosferatu — add print message and fix silent string on line 56
-- [ ] `__random_error__` — randint range is 0-5 but list has 7 items, change to randint(0, 6)
-- [ ] Retreat bug — pop `visited_rooms[-1]` after retreating so repeated retreats work correctly
+- [done] `use_weapon` — line 49 crashes if no monster in room, use `monster` parameter instead of `self.current_room.monster`
+- [done] Garlic against non-Nosferatu — add print message and fix silent string on line 56
+- [done] `__random_error__` — randint range is 0-5 but list has 7 items, change to randint(0, 6)
+- [done] Retreat bug — pop `visited_rooms[-1]` after retreating so repeated retreats work correctly
 
 
 ## Bugs
- if you enter an input thats wrong game just shuts down that needs to change
- display where the next exit is so they no to go to it and if they can pick up weapons
- when entering a room if there is a monster please state that there is one and they have to defeat it
- move function is not working
- when displaying exit should just display the one
- item is not updating
- need a check inventory
- display monsters health
+
 
 
 ## Future Plans
-- Add graphics (Pygame)
-- Implement zombie maze properly
+- Add graphics (Pygame) — top-down view, player sprite, placeholder colored rectangles first, then real assets
+- Implement zombie maze properly — 8x8 randomly generated grid, full maze visible, text-based first then migrate to Pygame
 - Expand weapon and item system
+
+## Implementation Plan
+
+### Phase 1 — Zombie Maze (text-based)
+- Create a `Maze` class: generates a random 8x8 grid of connected cells
+- Each cell has exits (north, south, east, west) determined by maze generation algorithm
+- Player starts at one corner, exit at the opposite corner
+- Display the maze as text (e.g. ASCII grid)
+- Player navigates with direction inputs until they find the exit
+- On exit found, player returns to normal game
+
+### Phase 2 — Pygame
+- Install Pygame
+- Replace `__main_func__` with a Pygame event loop
+- Render room name, health, exits, inventory as text on screen
+- Add top-down room view with placeholder colored rectangles for player and monsters
+- Render maze as a grid of cells with walls
+- Handle keyboard input instead of `input()`

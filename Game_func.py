@@ -3,6 +3,7 @@ from Room import Room
 from Room import Monster
 from Room import Inventory
 from Player import Player
+from Maze import Maze
 import random
 class Game:
     def __setup_rooms__(self):
@@ -86,25 +87,22 @@ class Game:
         if direction in self.current_room.exits:
            
             next_room = self.current_room.exits[direction]
+            if self.current_room.monster != None and self.current_room.monster.life_points > 0:
+                return "Error can not move forward unless monster is defeated"
+
             if self.current_room.name == "Graveyard":
-                random_int = random.randint(1,2)
-                chance = int(input("Pick a number: "))
-                if( chance != random_int):
-                    self.player.__take_dammage__()
-                    print("Try Again!")
-                else:
-                    self.visited_rooms.append(self.current_room)
-                    self.player.__update_room__(next_room)
-                    self.current_room = next_room  
-                    
-            elif self.current_room.monster != None and self.current_room.monster.life_points > 0:
-                
-                    return "Error can not move forward unless monster is defeated"
-            
-            else:
+                grave = Maze()
+                grave.play()
                 self.visited_rooms.append(self.current_room)
                 self.player.__update_room__(next_room)
                 self.current_room = next_room
+ 
+            else:
+                self.visited_rooms.append(self.current_room)
+                self.player.__update_room__(next_room)
+                self.current_room = next_room  
+                    
+
 
         else:
              print("Error")  
@@ -155,7 +153,6 @@ class Game:
                 
                 if(self.current_room.name == "Graveyard"):
                      print("YOU HAVE ENTERED THE GRAVEYARD NO WEAPON WILL SAVE YOU HERE ONLY LUCK FOR WHAT IS DEAD MAY NEVER DIE")
-                     print("MOVE THEN PICK A NUMBER BETWEEN ONE TO TWO THAT WILL DECIDE YOU FAITH")
                 else:
                     print(self.current_room.monster.name + " is appearing to block your path \n you can use your weapons to defeat them")
             print("="*40)
